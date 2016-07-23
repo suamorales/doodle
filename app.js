@@ -76,5 +76,5 @@ app.use(function(err, req, res, next) {
 
 
 
-http.listen(3000)
+http.listen(3000, "127.0.0.1");
 module.exports = app;
