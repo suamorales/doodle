@@ -9,9 +9,11 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+var server = require('http').createServer(app);
+var io = require('socket.io').listen(server);
 
+
+var port = process.env.PORT || 3000; // Use the port that Heroku provides or default to 3000
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -35,11 +37,6 @@ app.use(function(req, res, next) {
   next(err);
 });
 
-
-io.configure(function () {  
-  io.set("transports", ["xhr-polling"]); 
-  io.set("polling duration", 10); 
-});
 
 
 
@@ -83,9 +80,9 @@ app.use(function(err, req, res, next) {
 
 
 
-var port = process.env.PORT || 5000; // Use the port that Heroku provides or default to 5000  
-app.listen(port, function() {  
-  console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
+
+server.listen(port, function() {  
+  console.log("Express server listening on port %d in %s mode", port, app.settings.env);
 });
 
 module.exports = app;
