@@ -35,8 +35,15 @@ app.use(function(req, res, next) {
   next(err);
 });
 
-var line_history = [];
 
+io.configure(function () {  
+  io.set("transports", ["xhr-polling"]); 
+  io.set("polling duration", 10); 
+});
+
+
+
+var line_history = [];
 io.on('connection', function(socket){
   for (var i in line_history) {
       socket.emit('draw_line', { line: line_history[i] } );
@@ -76,5 +83,9 @@ app.use(function(err, req, res, next) {
 
 
 
-http.listen(3000, "127.0.0.1");
+var port = process.env.PORT || 5000; // Use the port that Heroku provides or default to 5000  
+app.listen(port, function() {  
+  console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
+});
+
 module.exports = app;
