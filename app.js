@@ -49,10 +49,6 @@ io.on('connection', function(socket){
 
 })
 
-
-
-
-
 // error handlers
 
 // development error handler
@@ -80,5 +76,5 @@ app.use(function(err, req, res, next) {
 
 
 
-http.listen(8080)
+http.listen(3000)
 module.exports = app;
